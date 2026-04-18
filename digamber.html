@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy 21st, Digamber — Certified Menace</title>
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --ink:#f5f5f0;
+    --blood:#ff2a2a;
+    --acid:#c6ff00;
+    --grime:#1a1a1a;
+    --muted:#8a8a8a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);font-family:"Courier New",monospace;overflow-x:hidden}
+  body{
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(255,42,42,.15), transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(198,255,0,.08), transparent 40%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 1px, transparent 1px 4px);
+  }
+
+  /* glitch noise */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+    background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.15'/></svg>");
+    mix-blend-mode:overlay;opacity:.4;
+  }
+
+  .marquee{
+    background:var(--blood);color:#000;font-weight:900;letter-spacing:.2em;
+    padding:8px 0;overflow:hidden;white-space:nowrap;text-transform:uppercase;
+    border-bottom:2px solid #000;position:relative;z-index:2;
+  }
+  .marquee span{display:inline-block;padding-left:100%;animation:scroll 22s linear infinite}
+  @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+
+  .hero{
+    min-height:90vh;display:grid;place-items:center;text-align:center;
+    padding:60px 20px;position:relative;z-index:2;
+  }
+  .age-stamp{
+    font-size:clamp(80px,18vw,260px);font-weight:900;line-height:.85;
+    color:transparent;-webkit-text-stroke:2px var(--ink);
+    text-shadow:6px 6px 0 var(--blood);
+    letter-spacing:-.05em;
+  }
+  h1{
+    font-size:clamp(36px,7vw,90px);margin-top:10px;text-transform:uppercase;
+    letter-spacing:.05em;
+  }
+  h1 .name{color:var(--acid);position:relative;display:inline-block}
+  h1 .name::after{
+    content:"DIGAMBER";position:absolute;left:2px;top:0;color:var(--blood);
+    mix-blend-mode:screen;animation:glitch 2.4s infinite;
+  }
+  @keyframes glitch{
+    0%,100%{clip-path:inset(0 0 90% 0);transform:translate(0,0)}
+    20%{clip-path:inset(40% 0 40% 0);transform:translate(-3px,1px)}
+    40%{clip-path:inset(80% 0 5% 0);transform:translate(3px,-1px)}
+    60%{clip-path:inset(10% 0 70% 0);transform:translate(-2px,2px)}
+    80%{clip-path:inset(60% 0 20% 0);transform:translate(2px,-2px)}
+  }
+  .sub{margin-top:20px;color:var(--muted);max-width:720px;font-size:18px;line-height:1.6}
+  .sub b{color:var(--acid)}
+
+  /* image placeholder */
+  .frame{
+    margin:50px auto 0;width:min(420px,80vw);aspect-ratio:1/1;
+    border:3px dashed var(--blood);background:var(--grime);
+    display:grid;place-items:center;text-align:center;padding:20px;
+    position:relative;transform:rotate(-2deg);
+    box-shadow:10px 10px 0 var(--acid);
+  }
+  .frame::before{
+    content:"WANTED";position:absolute;top:-18px;left:50%;transform:translateX(-50%);
+    background:#000;color:var(--blood);padding:4px 14px;font-weight:900;letter-spacing:.3em;
+    border:2px solid var(--blood);
+  }
+  .frame p{color:var(--muted);font-size:14px;letter-spacing:.1em;text-transform:uppercase}
+  .frame small{display:block;color:var(--ink);margin-top:8px;font-size:12px}
+
+  section{padding:80px 24px;max-width:1100px;margin:0 auto;position:relative;z-index:2}
+  .section-title{
+    font-size:clamp(28px,5vw,56px);text-transform:uppercase;font-weight:900;
+    border-left:8px solid var(--blood);padding-left:16px;margin-bottom:36px;
+  }
+  .section-title span{color:var(--acid)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+  .card{
+    background:var(--grime);border:1px solid #2a2a2a;padding:24px;
+    transition:.2s;position:relative;overflow:hidden;
+  }
+  .card:hover{transform:translateY(-4px);border-color:var(--acid);box-shadow:0 0 0 2px var(--acid)}
+  .card h3{font-size:20px;text-transform:uppercase;color:var(--acid);margin-bottom:10px;letter-spacing:.05em}
+  .card p{color:#cfcfcf;line-height:1.6;font-size:15px}
+  .card::after{
+    content:attr(data-num);position:absolute;right:10px;top:0;font-size:90px;font-weight:900;
+    color:rgba(255,42,42,.08);line-height:1;
+  }
+
+  .roast{
+    background:#000;border:2px solid var(--blood);padding:30px;margin:40px 0;
+    font-size:clamp(18px,2.4vw,26px);line-height:1.5;font-style:italic;
+  }
+  .roast::before{content:"// ROAST.exe ›  ";color:var(--blood);font-style:normal;font-weight:900}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:30px}
+  .stat{
+    background:var(--grime);padding:24px;text-align:center;border-bottom:4px solid var(--acid);
+  }
+  .stat .num{font-size:42px;font-weight:900;color:var(--blood);font-family:"Courier New",monospace}
+  .stat .label{font-size:12px;text-transform:uppercase;letter-spacing:.2em;color:var(--muted);margin-top:6px}
+
+  .terminal{
+    background:#000;border:1px solid #333;padding:20px;font-size:14px;line-height:1.7;
+    color:var(--acid);margin-top:20px;overflow:hidden;
+  }
+  .terminal .prompt{color:var(--blood)}
+  .cursor{display:inline-block;width:8px;height:14px;background:var(--acid);animation:blink 1s steps(2) infinite;vertical-align:middle}
+  @keyframes blink{50%{opacity:0}}
+
+  .cta{
+    text-align:center;padding:80px 20px;
+  }
+  .btn{
+    display:inline-block;background:var(--acid);color:#000;padding:18px 40px;
+    text-transform:uppercase;font-weight:900;letter-spacing:.2em;cursor:pointer;
+    border:none;font-family:inherit;font-size:16px;transition:.15s;
+    box-shadow:6px 6px 0 var(--blood);
+  }
+  .btn:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--blood)}
+  .btn:active{transform:translate(4px,4px);box-shadow:2px 2px 0 var(--blood)}
+
+  footer{
+    text-align:center;padding:40px 20px;color:var(--muted);font-size:12px;
+    border-top:1px solid #222;letter-spacing:.2em;text-transform:uppercase;
+  }
+  footer .heart{color:var(--blood)}
+
+  .easter{
+    position:fixed;bottom:10px;right:10px;font-size:10px;color:#333;z-index:5;
+  }
+</style>
+</head>
+<body>
+
+<div class="marquee">
+  <span>⚠ WARNING ⚠ &nbsp; CIVIL ENGINEER TURNED 21 &nbsp; • &nbsp; STRUCTURAL INTEGRITY OF HIS LIFE: QUESTIONABLE &nbsp; • &nbsp; HAPPY BIRTHDAY DIGAMBER &nbsp; • &nbsp; PLEASE TOUCH GRASS &nbsp; • &nbsp; SEASON 21 NOW STREAMING &nbsp; • &nbsp;</span>
+</div>
+
+<section class="hero">
+  <div>
+    <div class="age-stamp">21</div>
+    <h1>Happy Birthday, <span class="name" data-text="DIGAMBER">DIAGAMBER</span></h1>
+    <p class="sub">
+      Today, a future <b>civil engineer</b> levels up to <b>21</b> — old enough to drink legally in some countries,
+      yet still emotionally invested in whether <b>Eren Yeager</b> was the good guy.
+      You've watched more episodes than you've attended lectures. We're proud. Sort of.
+    </p>
+
+    <!-- IMAGE PLACEHOLDER — replace src with his photo -->
+    <div class="frame">
+      <img id="digamberImg" alt="Digamber — insert photo here"
+           src="digu.jpeg" style="display:none;width:100%;height:100%;object-fit:cover"/>
+      <div id="placeholderText">
+        <p>📸 Insert Photo of the Suspect Here</p>
+        <small>Replace src in &lt;img id="digamberImg"&gt; with his picture</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">The <span>Digamber</span> Files</h2>
+  <div class="grid">
+    <div class="card" data-num="01">
+      <h3>Civil Engineer™</h3>
+      <p>Studies how to build bridges, but can't build a sleep schedule. Calculates load-bearing capacities by day, calculates which season to binge by night.</p>
+    </div>
+    <div class="card" data-num="02">
+      <h3>Anime Certified</h3>
+      <p>Has a mental tier list for waifus more organized than his structural drawings. Cried at a fictional swordsman. Will deny it. We have receipts.</p>
+    </div>
+    <div class="card" data-num="03">
+      <h3>Movie Encyclopedia</h3>
+      <p>Has seen every Nolan film 4 times "to fully understand them." Bro, you understood it the first time. You just like sounding smart in the group chat.</p>
+    </div>
+    <div class="card" data-num="04">
+      <h3>Series Speedrunner</h3>
+      <p>Finishes 8-season shows in 3 days. The only deadline he respects is Netflix's "Are you still watching?" prompt — which is also his only social interaction.</p>
+    </div>
+    <div class="card" data-num="05">
+      <h3>Right Hand of God</h3>
+      <p>Strongest forearm muscles in the entire civil department. Could probably crack a walnut. Definitely puts in more reps than at the gym. Cardio? Never heard of her.</p>
+    </div>
+    <div class="card" data-num="06">
+      <h3>21 & Thriving</h3>
+      <p>Officially old enough to make terrible decisions and call it "character development." Statistically, peak menace years begin NOW.</p>
+    </div>
+  </div>
+
+  <div class="roast">
+    "Digamber will design skyscrapers that can withstand earthquakes — but his Wi-Fi router cannot withstand his nightly… <em>private screening sessions</em>. Stay strong, little router. 🙏"
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Year <span>21</span> — By The Numbers</h2>
+  <div class="stats">
+    <div class="stat"><div class="num" data-target="847">0</div><div class="label">Episodes Watched</div></div>
+    <div class="stat"><div class="num" data-target="3">0</div><div class="label">Lectures Attended</div></div>
+    <div class="stat"><div class="num" data-target="9999">0</div><div class="label">Tissues Used*</div></div>
+    <div class="stat"><div class="num" data-target="0">0</div><div class="label">Girlfriends</div></div>
+  </div>
+  <p style="color:#555;font-size:11px;margin-top:14px">*for emotional anime scenes, obviously. what did you think?</p>
+</section>
+
+<section>
+  <h2 class="section-title">System <span>Diagnostic</span></h2>
+  <div class="terminal">
+    <div><span class="prompt">digamber@life:~$</span> sudo birthday --age 21</div>
+    <div>› Loading personality... <span style="color:#fff">[OK]</span></div>
+    <div>› Checking GPA... <span style="color:var(--blood)">[CONCERNING]</span></div>
+    <div>› Scanning watch history... <span style="color:var(--blood)">[2,847 hours detected]</span></div>
+    <div>› Scanning browser history... <span style="color:var(--blood)">[ACCESS DENIED — for everyone's sanity]</span></div>
+    <div>› Checking gym attendance... <span style="color:var(--blood)">[file not found]</span></div>
+    <div>› Checking forearm gains... <span style="color:var(--acid)">[ELITE TIER 💪]</span></div>
+    <div>› Concrete knowledge... <span style="color:var(--acid)">[STRONG]</span></div>
+    <div>› Self-control... <span style="color:var(--blood)">[BUFFERING...]</span></div>
+    <div><span class="prompt">digamber@life:~$</span> wish --happy --birthday<span class="cursor"></span></div>
+  </div>
+</section>
+
+<div class="cta">
+  <button class="btn" onclick="celebrate()">🎂 Press For Birthday Wish 🎂</button>
+  <p id="wish" style="margin-top:30px;font-size:20px;color:var(--acid);min-height:30px"></p>
+</div>
+
+<footer>
+  Built with <span class="heart">♥</span> &amp; mild concern &nbsp;|&nbsp; For Digamber, age 21 &nbsp;|&nbsp; Touch grass occasionally
+</footer>
+
+<div class="easter">v21.0.0 — patch notes: still hasn't found a girlfriend</div>
+
+<script>
+  // count-up stats
+  const animate = (el, target) => {
+    let cur = 0;
+    const step = Math.max(1, Math.floor(target/60));
+    const t = setInterval(() => {
+      cur += step;
+      if (cur >= target){cur = target; clearInterval(t)}
+      el.textContent = cur.toLocaleString();
+    }, 25);
+  };
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting){
+        animate(e.target, parseInt(e.target.dataset.target,10));
+        io.unobserve(e.target);
+      }
+    });
+  });
+  document.querySelectorAll('.num').forEach(n => io.observe(n));
+
+  // birthday wish rotator
+  const wishes = [
+    "Happy 21st, you absolute menace. May your beams stay strong and your Wi-Fi stay private. 🔒",
+    "21 years of being a walking spoiler alert. We still love you. Mostly.",
+    "May this year bring you a girlfriend — or at the very least, a stronger left hand for balance. 💪",
+    "Cheers to becoming a structural engineer who can't structure his sleep, diet, or self-control.",
+    "Happy birthday! May Studio Ghibli release a new movie just for you. You've earned it. (You haven't.)",
+    "21 and thriving. Well, surviving. Same thing in civil engineering."
+  ];
+  let i = 0;
+  function celebrate(){
+    document.getElementById('wish').textContent = wishes[i % wishes.length];
+    i++;
+    confetti();
+  }
+
+  // cheap confetti
+  function confetti(){
+    const colors = ['#ff2a2a','#c6ff00','#fff','#ffeb3b'];
+    for (let k=0;k<60;k++){
+      const c = document.createElement('div');
+      c.style.cssText = `position:fixed;width:8px;height:14px;top:-20px;left:${Math.random()*100}vw;background:${colors[k%4]};z-index:9999;transform:rotate(${Math.random()*360}deg);transition:transform 2.5s linear, top 2.5s linear, opacity 2.5s linear;pointer-events:none`;
+      document.body.appendChild(c);
+      requestAnimationFrame(() => {
+        c.style.top = '110vh';
+        c.style.transform = `rotate(${Math.random()*1080}deg) translateX(${(Math.random()-.5)*200}px)`;
+        c.style.opacity = '0';
+      });
+      setTimeout(() => c.remove(), 2700);
+    }
+  }
+
+  // auto-show image if user inserts src
+  const img = document.getElementById('digamberImg');
+  const ph = document.getElementById('placeholderText');
+  if (img.getAttribute('src')) { img.style.display='block'; ph.style.display='none'; }
+
+  // konami-ish: type "21" to trigger confetti
+  let buf = '';
+  window.addEventListener('keydown', e => {
+    buf = (buf + e.key).slice(-2);
+    if (buf === '21') confetti();
+  });
+</script>
+</body>
+</html>
